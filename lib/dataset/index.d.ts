@@ -1,0 +1,11 @@
+export type SimpleRouteJson = unknown
+export declare const circuit001: SimpleRouteJson
+export declare const circuit002: SimpleRouteJson
+export declare const circuit003: SimpleRouteJson
+export declare const circuit004: SimpleRouteJson
+export declare const circuit005: SimpleRouteJson
+export declare const circuit006: SimpleRouteJson
+export declare const circuit007: SimpleRouteJson
+export declare const circuit008: SimpleRouteJson
+export declare const circuit009: SimpleRouteJson
+export declare const circuit010: SimpleRouteJson
