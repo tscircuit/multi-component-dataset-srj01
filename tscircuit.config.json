@@ -1,0 +1,5 @@
+{
+  "$schema": "https://cdn.jsdelivr.net/npm/@tscircuit/cli/types/tscircuit.config.schema.json",
+  "includeBoardFiles": ["easy/*.circuit.tsx"],
+  "siteDefaultComponentPath": "easy/circuit001.circuit.tsx"
+}
