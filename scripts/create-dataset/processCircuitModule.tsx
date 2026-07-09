@@ -1,7 +1,9 @@
 import { writeFile } from "node:fs/promises"
 import path from "node:path"
-import { RootCircuit } from "@tscircuit/core"
+import { RootCircuit, unrouteCircuitJson } from "@tscircuit/core"
 import { getSimpleRouteJsonFromCircuitJson } from "tscircuit"
+
+const EXTRA_SOLVED_ROUTING_ELEMENT_TYPES = new Set(["pcb_via"])
 
 type CircuitComponent = () => React.ReactElement
 
@@ -35,7 +37,6 @@ export const processCircuitModule = async (processCircuitRequest: {
   }
 
   const circuit = new RootCircuit()
-  process.env.TSCIRCUIT_DATASET_DISABLE_AUTOROUTER = "true"
   circuit.schematicDisabled = true
   circuit.add(<Circuit />)
 
@@ -48,8 +49,11 @@ export const processCircuitModule = async (processCircuitRequest: {
 
   try {
     await circuit.renderUntilSettled()
+    const inputProblemCircuitJson = unrouteCircuitJson(
+      circuit.getCircuitJson(),
+    ).filter((el: any) => !EXTRA_SOLVED_ROUTING_ELEMENT_TYPES.has(el.type))
     const { simpleRouteJson } = getSimpleRouteJsonFromCircuitJson({
-      circuitJson: circuit.getCircuitJson(),
+      circuitJson: inputProblemCircuitJson,
     })
     await writeFile(outputPath, JSON.stringify(simpleRouteJson, null, 2))
     console.log("[Done]", baseName)
